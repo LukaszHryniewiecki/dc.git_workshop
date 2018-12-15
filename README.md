@@ -1,4 +1,4 @@
-# Workshop 1 - into
+# Workshop 1 - introduciton to git from console
 
 Commands we have used:
 * `git init`
