@@ -18,7 +18,7 @@ Commands we have used:
 #### Local repository
 1. `C:\stuff>mkdir new_repo` - create a new folder for your new repository
 2. `C:\stuff>cd new_repo` - change directory to `new_repo`
-3. `C:\stuff\new_repo>git init` - initialize a new empty git repositry in current directory
+3. `C:\stuff\new_repo>git init` - initialize a new empty git repository in current directory
    * all git commands work in the currect directory
    * this command will create a `.git` directory in which git stores everything about the repository
 4. `C:\stuff\new_repo>echo 'some text' > a.txt` - create file `a.txt` and write some content to it
@@ -38,7 +38,7 @@ nothing added to commit but untracked files present (use "git add" to track)
    * tells you what branch you are current on - `On branch master` - by defualt it will be `master`
    * tells us we don't yet have any commits in our repository - `No commits yet`
    * tells us that git sees an untracked file - `a.txt` - an untracked file is a file which git sees but the file has not yet been commited to our repository
-6. `C:\stuff\new_repo>git add a.txt` - stage file `a.txt` for commit
+6. `C:\stuff\new_repo>git add a.txt` - stage file `a.txt` for commiting
    * in git before a file is commited it first must be staged. Staging is just tellig git: "hey, we want to commit this file in a moment". When staging git will mark the file as "by next commit this file will be included in the commit"
    * if we don't want to stage every file separately we can stage all files by `git add .`
 7. `C:\stuff\new_repo>git status` - make sure our file is staged
@@ -82,11 +82,11 @@ Date:   Sat Dec 15 22:39:23 2018 +0100
 13. `C:\stuff\new_repo>gitk` - show commits tree in a visual form
 
 #### Remote repository
-Untill now our repositry exists only locally. To create/add a remote counterpart for our repository we will need to create a github account and create a new empty repository on github. After creating a new repository on git hub we can tell our local repository that is has a remote counterpart.
+Untill now our repositry exists only locally. To create/add a remote counterpart for our repository we will need to create a github account and create a new empty repository on github. After creating a new repository on github we can tell our local repository that is has a remote counterpart.
 1. `C:\stuff\new_repo>git remote add origin https://github.com/inwenis/new_repo` - tell our local repository that is has a remote repository under the URL `https://github.com/inwenis/new_repo`. The remote repository will be named `origin`
-   * we can name our remote repository anything - using `potato` insted of `origin` will work. It is however a convetion to name the `main` remote repository `origin`
+   * we can name our remote repository anything - using `potato` insted of `origin` will work. It is however a convetion to name the main remote repository `origin`
    * we can add multiple remote repositories `git remote add my_secret_remote https://github.com/inwenis/my_secret_remote`, however this is used rarley.
-2. `C:\stuff\new_repo>git remote` - make sure our remote repositry was added. Git should print a list of remote repositores, this list should contains only `origin`.
+2. `C:\stuff\new_repo>git remote` - make sure our remote repositry was added. Git should print a list of remote repositores, this list should inclusd only `origin`.
 3. `C:\stuff\new_repo>git remote show origin` - make sure `origin` has correct URLs.
 ```
 * remote origin
@@ -95,7 +95,8 @@ Untill now our repositry exists only locally. To create/add a remote counterpart
   HEAD branch: (unknown)
 ```
 At this point our local repository has a remote `origin` repository but no branches are yet connected between our local repository and `origin`
-4. `C:\stuff\new_repo>git push -u origin master` - push commits from `master` branch to `origin`. Bind our local `master` banch to `origin`'s `master` branch.
+
+4. `C:\stuff\new_repo>git push -u origin master` - push commits from `master` branch to `origin`. Bind our local `master` branch to `origin`'s `master` branch.
 ```
 Enumerating objects: 7, done.
 Counting objects: 100% (7/7), done.
@@ -107,7 +108,7 @@ To https://github.com/inwenis/new_repo.git
  * [new branch]      master -> master
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 ```
-   * git tells us the `master` branch was created in `origin`
+   * git tells us the `master` branch was created in `origin` - `* [new branch]      master -> master`
    * `Branch 'master' set up to track remote branch 'master' from 'origin'.` - git tells us our local `master` it bound to `origin`'s `master`
    * we will only need to write `-u origin master` only the first time. It tells git to "bind" our local `master` to `origin`'s `master`
    * we can now see our commits on github
@@ -128,8 +129,8 @@ Unpacking objects: 100% (7/7), done.
    * by default cloning will create a `new_repo` folder (named after the URL) with the repository
    * the local clone has `origin` already setup to `https://github.com/inwenis/new_repo`
    * `master` is already "bound" to `origin`'s `master`
-   * if we would like the repo to be cloned to another folder we can find the appropriate option in `git clone --help`
-6. add some changes in the cloned repository, commit and push them. Note that this time we can just use `git push` without `-u origin master` since when cloning everything is already setup.
+   * if we would like the repository to be cloned to a folder name firrerently we can find the appropriate option in `git clone --help`
+6. Add some changes in the cloned repository, commit and push them. Note that this time we can just use `git push` without `-u origin master` since when cloning everything is already setup.
 7. `C:\joe_doe\new_repo>cd ..\..\sutff\new_repo` - go back to our original repository
 8. `C:\sutff\new_repo>git fetch` - download new commits from `origin`
 ```
@@ -146,9 +147,9 @@ From https://github.com/inwenis/new_repo
    * we can see the the branch `remotes/origin/master` is ahead of `master`. It has commits commited while we were `joe_doe`
    * `origin/master` is a branch used by our local repository to track `origin`'s `master` branch
 10. `C:\sutff\new_repo>git merge origin/master` - merge commits present in `origin/master` to our current branch - ie. `master`
-   * in this case everything should go smooth an git should tell us the merge is a `fast-forward`
+   * in this case everything should go smooth and git should tell us the merge is a `fast-forward`
    * we can use the command `git pull` which is equivalent to `git fetch` + `git merge`
 
-What would happen if before fetching you would introduce changes in `C:\sutff\new_repo` to the same as which `joe_doe` modifies?
+What would happen if before fetching you would work on the same file as `joe_doe` did?
 
-You can replay the exercise and try to do it - you should get a merge confilict which is a often problem if multiple people modify the same file in the same places.
+You can replay the exercise and try to do it - you should get a merge confilict which is a popular problem if multiple people modify the same file in the same places.
