@@ -153,3 +153,64 @@ From https://github.com/inwenis/new_repo
 What would happen if before fetching you would work on the same file as `joe_doe` did?
 
 You can replay the exercise and try to do it - you should get a merge confilict which is a popular problem if multiple people modify the same file in the same places.
+
+# Workshop 2 - introduciton to branches
+
+New commands we have used:
+* `git branch`
+* `git checkout`
+* we have resused a lot of commands from Workshop 1
+
+#### Collaborating on remote repositories on your own branch
+1. `C:\stuff>git clone https://github.com/inwenis/dc.git.workshop1` - clone the remote repository into a local one
+2. `C:\stuff>cd dc.git.workshop1` - change the working directory to `dc.git.workshop1`
+3. `C:\stuff\dc.git.workshop1>git status` - make sure we are in a git repository.
+   * if you see `fatal: not a git repository (or any of the parent directories): .git` it means you have a problem and you're not in a git repository. 
+4. `C:\stuff\dc.git.workshop1>git branch my_very_own_branch_123` - create a new branch `my_very_own_branch_123` in the current repository.
+   * you can use almost any name for a branch. If the name will not be valid git will tell you.
+   * teams often agree on some naming convention for their branches. For example branches which you use to code features are named: `feature/DCT-123` and branches used to code hotfixes are named: `hotfix/DCT-124`.
+      * git considers the `feature/DCT-123` branch names just a name, the `/` or `feature` has no special meaning for git
+      * `DCT` might be the teams acronim or name of jira board
+      * `123`/`124` can be the task names from jira
+      * using this naming convention will allow jira to automatically assosiate tasks with git branches
+5. `C:\stuff\dc.git.workshop1>git branch` - list all branches
+```
+* master
+  my_very_own_branch_123
+```
+   * git tell us there are 2 branches in this repository and the current branch is `* master` (marked by a `*`)
+6. `C:\stuff\dc.git.workshop1>git checkout my_very_own_branch_123` - change the current branch to `my_very_own_branch_123`
+```
+Switched to branch 'my_very_own'
+```
+   * creating a new branch and checking it out is a very common activity. You can do it with a single command - `git checkout -b new_branch_name`
+7. make same changes to existing files, add new ones, commit a few commts on your branch.
+8. `C:\stuff\dc.git.workshop1>gitk` - see how the commits tree looks like after adding new commits
+9. `C:\stuff\dc.git.workshop1>git push -u origin my_very_own_branch_123` - push your `my_very_own_branch_123` branch to the remote repository.
+```
+Total 0 (delta 0), reused 0 (delta 0)
+remote:
+remote: Create a pull request for 'my_very_own_branch_123' on GitHub by visiting:
+remote:      https://github.com/inwenis/dc.git.workshop1/pull/new/my_very_own
+remote:
+To https://github.com/inwenis/dc.git.workshop1
+ * [new branch]      my_very_own_branch_123 -> my_very_own_branch_123
+Branch 'my_very_own_branch_123' set up to track remote branch 'my_very_own_branch_123' from 'origin'.
+```
+   * untill now the branch `my_very_own_branch_123` was present only in your local clone of the repository `dc.git.workshop1`.
+   * after pushing `dc.git.workshop1` to `origin` others can now see your branch.
+10. `C:\stuff\dc.git.workshop1>git checkout master` - change the current branch to `master`
+11. `C:\stuff\dc.git.workshop1>git merge my_very_own_branch_123` - merge branch `my_very_own_branch_123` into the current branch (into `master`)
+```
+Updating 6c56d1c..be86211
+Fast-forward
+ b.txt | Bin 0 -> 14 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 b.txt
+```
+12. `C:\stuff\dc.git.workshop1>gitk` - see how the commits tree looks like.
+13. `C:\stuff\dc.git.workshop1>git push` - push new commits on current branch `master` to the remote repository
+
+Using branches helps to better organize your work. You can work on multiple tasks at the same time having a separate branch for every task.
+
+If you would like to share work in progress with someone you can push your branch to remote repository and send the branch name to your coworkers. They will be able the do a `git fetch` and then `git checkout ...` and admire the genius of your work!
